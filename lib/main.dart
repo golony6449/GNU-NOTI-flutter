@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:gnu_noti_flutter/setting.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return new MaterialApp(
+      home: ListRoute()
+    );
+  }
+}
+
+class ListRoute extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -27,7 +38,7 @@ class MyApp extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.settings),
               iconSize: 25,
-              onPressed: _settingEvent,
+              onPressed: () => _settingEvent(context),
             )
           ],
 
@@ -39,8 +50,12 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  void _settingEvent(){
+  void _settingEvent(BuildContext context){
     print("Setting Button Pressed");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SettingRoute())
+    );
   }
 }
 
