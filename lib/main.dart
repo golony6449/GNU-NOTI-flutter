@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gnu_noti_flutter/setting.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
 
@@ -71,7 +72,8 @@ class NotificationListState extends State<NotificationList>{
         padding: EdgeInsets.all(10.0),
         itemBuilder: (context, i) {
           return ListTile(
-            title: _buildList(i)
+            title: _buildList(i),
+            onTap: _launch,
           );
         }
     );
@@ -79,5 +81,9 @@ class NotificationListState extends State<NotificationList>{
 
   Widget _buildList(int i){
     return Text(i.toString());
+  }
+
+  void _launch() {
+    launch("http://www.gnu.ac.kr");
   }
 }

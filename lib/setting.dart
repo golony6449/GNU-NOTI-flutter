@@ -18,6 +18,9 @@ class SettingList extends StatefulWidget{
 }
 
 class SettingListState extends State<SettingList>{
+  List<bool> status = [true, true, false];
+  bool temp = false;
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -53,14 +56,23 @@ class SettingListState extends State<SettingList>{
     
     return Text(desc[i]);
   }
-  
+
+  // TODO: 설정 값 저장
+  // TODO: 스위치 토글시 화면 갱신
   Widget _buildListElementSwitch(int i){
     return Switch(
+//      onChanged: tempFunc,
+//      value: temp,
       onChanged: (bool value) {
-        bool status = value;
+        status[i] = value;
         print("Switch: Status Changed");
+        print(value);
       },
-      value: false
+      value: status[i],
     );
+  }
+
+  void tempFunc(bool val){
+    temp = val;
   }
 }
