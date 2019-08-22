@@ -61,12 +61,11 @@ class SettingListState extends State<SettingList>{
   // TODO: 스위치 토글시 화면 갱신
   Widget _buildListElementSwitch(int i){
     return Switch(
-//      onChanged: tempFunc,
-//      value: temp,
       onChanged: (bool value) {
         status[i] = value;
         print("Switch: Status Changed");
         print(value);
+        setState(() {});
       },
       value: status[i],
     );
