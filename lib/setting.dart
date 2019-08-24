@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingRoute extends StatelessWidget{
   @override
@@ -18,11 +19,18 @@ class SettingList extends StatefulWidget{
 }
 
 class SettingListState extends State<SettingList>{
-  List<bool> status = [true, true, false];
-  bool temp = false;
+  List<bool> status = List();
 
   @override
   Widget build(BuildContext context) {
+    getStatus().then(
+        (List<bool> values){
+//          print("Setting status: $values");
+          status = values;
+          print("Setting values: $status");
+        }
+    );
+
     return ListView.separated(
         separatorBuilder: (context, i) => Divider(
           color: Colors.black
@@ -64,14 +72,38 @@ class SettingListState extends State<SettingList>{
       onChanged: (bool value) {
         status[i] = value;
         print("Switch: Status Changed");
-        print(value);
+        print("Menu: $value");
+        setStatus();
+
         setState(() {});
       },
       value: status[i],
     );
   }
 
-  void tempFunc(bool val){
-    temp = val;
+  Future<List<bool>> getStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    List<bool> values = List();
+    bool value;
+
+    value = prefs.getBool("HOTNEWS") ?? prefs.setBool("HOTNEWS", true);
+    values.add(value);
+
+    value = prefs.getBool("AGENCY") ?? prefs.setBool("AGENCY", true);
+    values.add(value);
+
+    value = prefs.getBool("CS") ?? prefs.setBool("CS", false);
+    values.add(value);
+
+    return values;
+  }
+
+  Future<void> setStatus() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool("HOTNEWS", status[0]);
+    prefs.setBool("AGENCY", status[1]);
+    prefs.setBool("CS", status[2]);
   }
 }
