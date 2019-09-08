@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gnu_noti_flutter/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -105,22 +106,36 @@ class NotificationList extends StatefulWidget{
 class NotificationListState extends State<NotificationList>{
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: EdgeInsets.all(10.0),
-        itemBuilder: (context, i) {
-          return ListTile(
-            title: _buildList(i),
-            onTap: _launch,
-          );
-        }
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection("dev").snapshots(),
+      builder: (context, snapshot){
+        if (!snapshot.hasData) return CircularProgressIndicator();
+
+        return _buildListView(snapshot.data.documents);
+      },
     );
   }
 
-  Widget _buildList(int i){
-    return Text(i.toString());
+  Widget _buildListView(List<DocumentSnapshot> snapshot){
+    return ListView(
+        padding: EdgeInsets.all(20),
+        children: snapshot.map((data) => _buildListItem(data)).toList()
+    );
   }
-
-  void _launch() {
-    launch("http://www.gnu.ac.kr");
+  Widget _buildListItem(DocumentSnapshot snapshot){
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          child: ListTile(
+            title: Text(snapshot.data['title']),
+            subtitle: Text(snapshot.data['category']),
+            onTap: () => launch(snapshot.data['url']),
+          ),
+        )
+    );
   }
 }

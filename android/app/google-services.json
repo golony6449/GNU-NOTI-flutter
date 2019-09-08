@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "356501583184",
+    "firebase_url": "https://gnu-noti.firebaseio.com",
+    "project_id": "gnu-noti",
+    "storage_bucket": "gnu-noti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356501583184:android:ec61ae03cc6b32e6",
+        "android_client_info": {
+          "package_name": "dev.golony.gnu_noti.gnu_noti_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356501583184-2a856decvuotkn4peihi8sa0e85a4k4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5E-0jZVLnyjHaLLAWFaSpweNcsXZtIpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356501583184-2a856decvuotkn4peihi8sa0e85a4k4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

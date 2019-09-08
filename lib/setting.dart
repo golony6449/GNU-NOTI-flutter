@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingRoute extends StatelessWidget{
   @override
@@ -63,7 +64,7 @@ class SettingListState extends State<SettingList>{
         separatorBuilder: (context, i) => Divider(
           color: Colors.black
         ),
-        itemCount: 3,
+        itemCount: 4,
         padding: EdgeInsets.all(10.0),
         itemBuilder: (context, i) {
           return SettingListTile(
@@ -123,6 +124,14 @@ class SettingListTile extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    if (i == 3){
+      return ListTile(
+        title: Text("텔레그램 채널로 이동"),
+        onTap: _telegramLaunch,
+        subtitle: Text("텔레그램으로도 동일한 알림을 받을 수 있습니다."),
+      );
+    }
+
     return ListTile(
       title: _buildListElementText(i),
       subtitle: _buildListElementDesc(i),
@@ -159,4 +168,7 @@ class SettingListTile extends StatelessWidget{
     );
   }
 
+  void _telegramLaunch(){
+    launch("https://t.me/GNU_NOTI");
+  }
 }
