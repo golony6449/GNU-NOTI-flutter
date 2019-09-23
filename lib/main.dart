@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:gnu_noti_flutter/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +13,51 @@ class MyApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging _fcm = FirebaseMessaging();
+    _fcm.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        final snackBar = SnackBar(content: Text('New Noti'));
+
+        // Find the Scaffold in the widget tree and use it to show a SnackBar.
+        Scaffold.of(context).showSnackBar(snackBar);
+
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(message['notification']['title']),
+              subtitle: Text(message['notification']['body']),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        // TODO optional
+        final snackBar = SnackBar(content: Text('New Noti'));
+
+        // Find the Scaffold in the widget tree and use it to show a SnackBar.
+        Scaffold.of(context).showSnackBar(snackBar);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        // TODO optional
+        final snackBar = SnackBar(content: Text('New Noti'));
+
+        // Find the Scaffold in the widget tree and use it to show a SnackBar.
+        Scaffold.of(context).showSnackBar(snackBar);
+      },
+    );
+
+    _fcm.subscribeToTopic('dev');
+
     // 주의: then 메서드는 콜백함수의 반환값을 처리할 수 없음
     getStatus().then(
             (List<bool> values) {
