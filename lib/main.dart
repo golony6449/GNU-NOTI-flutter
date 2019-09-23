@@ -138,10 +138,16 @@ class ListRoute extends StatelessWidget {
 
   void _settingEvent(BuildContext context){
     print("Setting Button Pressed");
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SettingRoute())
-    );
+    // TODO: 우선 한 컬랙션에 모두 저장 후 추후 구현
+//    Navigator.push(
+//      context,
+//      MaterialPageRoute(builder: (context) => SettingRoute())
+//    );
+    Flushbar(
+      title: "불편을 드려 죄송합니다.",
+      message: "설정기능은 현재 개발중입니다.",
+      duration: Duration(seconds: 3),
+    ).show(context);
   }
 }
 

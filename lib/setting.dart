@@ -13,19 +13,20 @@ class SettingRoute extends StatelessWidget{
       body: FutureBuilder(
         future: getStatus(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            print("데이터 준비 끝");
-            SettingListState.status = snapshot.data;
-            return SettingList();
+          if (!snapshot.hasData) {
+            print("데이터 준비중");
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           }
           else if (snapshot.hasError){
             Text("ERROR: $snapshot.error");
           }
           // TODO: 데이터 준비가 너무 빨라, 버벅이는 것 처럼 보이는 문제 발생
-          print("데이터 준비중");
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+
+          print("데이터 준비 끝");
+          SettingListState.status = snapshot.data;
+          return SettingList();
         },
       )
     );
