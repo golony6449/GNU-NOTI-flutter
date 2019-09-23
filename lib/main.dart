@@ -160,7 +160,7 @@ class NotificationListState extends State<NotificationList>{
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection("dev").snapshots(),
+      stream: Firestore.instance.collection("dev").orderBy('id', descending: true).snapshots(),
       builder: (context, snapshot){
         if (!snapshot.hasData) return CircularProgressIndicator();
 
