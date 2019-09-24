@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
+String DEBUG_CHANNEL = 'dev';
 
 class MyApp extends StatelessWidget{
   List<bool> status;
@@ -17,46 +18,46 @@ class MyApp extends StatelessWidget{
     _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
-        final snackBar = SnackBar(content: Text('New Noti'));
-
-        // Find the Scaffold in the widget tree and use it to show a SnackBar.
-        Scaffold.of(context).showSnackBar(snackBar);
-
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            content: ListTile(
-              title: Text(message['notification']['title']),
-              subtitle: Text(message['notification']['body']),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-        );
+//        final snackBar = SnackBar(content: Text('New Noti'));
+//
+//        // Find the Scaffold in the widget tree and use it to show a SnackBar.
+//        Scaffold.of(context).showSnackBar(snackBar);
+//
+//        showDialog(
+//          context: context,
+//          builder: (context) => AlertDialog(
+//            content: ListTile(
+//              title: Text(message['notification']['title']),
+//              subtitle: Text(message['notification']['body']),
+//            ),
+//            actions: <Widget>[
+//              FlatButton(
+//                child: Text('Ok'),
+//                onPressed: () => Navigator.of(context).pop(),
+//              ),
+//            ],
+//          ),
+//        );
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("onLaunch: $message");
-        // TODO optional
-        final snackBar = SnackBar(content: Text('New Noti'));
-
-        // Find the Scaffold in the widget tree and use it to show a SnackBar.
-        Scaffold.of(context).showSnackBar(snackBar);
+//        // TODO optional
+//        final snackBar = SnackBar(content: Text('New Noti'));
+//
+//        // Find the Scaffold in the widget tree and use it to show a SnackBar.
+//        Scaffold.of(context).showSnackBar(snackBar);
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
         // TODO optional
-        final snackBar = SnackBar(content: Text('New Noti'));
-
-        // Find the Scaffold in the widget tree and use it to show a SnackBar.
-        Scaffold.of(context).showSnackBar(snackBar);
+//        final snackBar = SnackBar(content: Text('New Noti'));
+//
+//        // Find the Scaffold in the widget tree and use it to show a SnackBar.
+//        Scaffold.of(context).showSnackBar(snackBar);
       },
     );
 
-    _fcm.subscribeToTopic('dev');
+    _fcm.subscribeToTopic(DEBUG_CHANNEL);
 
     // 주의: then 메서드는 콜백함수의 반환값을 처리할 수 없음
     getStatus().then(
@@ -160,7 +161,7 @@ class NotificationListState extends State<NotificationList>{
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection("dev").orderBy('id', descending: true).snapshots(),
+      stream: Firestore.instance.collection(DEBUG_CHANNEL).orderBy('id', descending: true).snapshots(),
       builder: (context, snapshot){
         if (!snapshot.hasData) return CircularProgressIndicator();
 
