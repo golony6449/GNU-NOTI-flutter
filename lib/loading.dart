@@ -8,7 +8,7 @@ class LoadingRoute extends StatefulWidget {
 
 class _LoadingRouteState extends State<LoadingRoute> {
   startTime() async {
-    var _duration = new Duration(seconds: 2);
+    var _duration = new Duration(seconds: 3 );
     return new Timer(_duration, navigationPage);
   }
 
@@ -29,7 +29,7 @@ class _LoadingRouteState extends State<LoadingRoute> {
           children: <Widget>[
             new Align(
               alignment: Alignment(0, -0.3),
-              child: new Image.asset('assets/image/logo.png'),
+              child: new Image.asset('assets/image/logo.png', width: 200, height: 200,),
             ),
 
             new Align(
