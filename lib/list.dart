@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: non_constant_identifier_names
-String DEBUG_CHANNEL = 'mix';
+ String DEBUG_CHANNEL = 'mix';
+//String DEBUG_CHANNEL = 'dev';
 
 class ListRoute extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,7 +50,7 @@ class ListRoute extends StatelessWidget {
 //              ),
 //              BottomNavigationBarItem(
 //                  icon: new Icon(Icons.message),
-//                  title: new Text("기관공지")
+//                  title: new Text("기관공지"),
 //              )
 //            ],
 //          ),
@@ -100,12 +102,21 @@ class NotificationListState extends State<NotificationList>{
     );
   }
   Widget _buildListItem(DocumentSnapshot snapshot){
+    Color color;
+    if (snapshot.data['category'] == "기관공지"){
+      color = Color.fromRGBO(255, 254, 76, 0.4);
+    }
+    else {
+      color = Color.fromRGBO(128, 222, 234, 0.4);
+    }
+
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0),
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(5.0),
+            color: color,
           ),
           child: ListTile(
             title: Text(snapshot.data['title']),
