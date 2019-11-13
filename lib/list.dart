@@ -5,14 +5,29 @@ import 'package:gnu_noti_flutter/mode_selector.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: non_constant_identifier_names
- String DEBUG_CHANNEL = 'mix';
-//String DEBUG_CHANNEL = 'dev';
+// String DEBUG_CHANNEL = 'mix';
+String DEBUG_CHANNEL = 'dev';
+String channel;
 
 class ListRoute extends StatelessWidget {
   // This widget is the root of your application.
 
+  ListRoute({String ch = "mix"}){
+    channel = ch;
+
+    // For Debug Mode
+    if (DEBUG_CHANNEL == 'dev'){
+      channel = "dev";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final String mode = ModalRoute.of(context).settings.arguments;
+    channel = mode;
+
+    print("선택된 모드: $mode");
+
     return MaterialApp(
         title: 'GNU-NOTI',
         theme: ThemeData(
@@ -77,7 +92,7 @@ class NotificationListState extends State<NotificationList>{
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection(DEBUG_CHANNEL).orderBy('id', descending: true).snapshots(),
+      stream: Firestore.instance.collection(channel).orderBy('id', descending: true).snapshots(),
       builder: (context, snapshot){
         if (!snapshot.hasData) {
           print('준비중');

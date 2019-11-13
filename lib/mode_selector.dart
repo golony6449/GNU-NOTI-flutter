@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gnu_noti_flutter/list.dart';
 
 class ModeSelector extends StatefulWidget{
   @override
@@ -38,6 +39,24 @@ class ModeSelector extends StatefulWidget{
 
     setState(() {
       selected = index;
+
+      if (selected == 0){
+        Navigator.of(context).pushReplacementNamed('/List', arguments: 'mix');
+      }
+      else if (selected == 1){
+        print("임시 모드");
+//        Navigator.of(context).pushReplacementNamed('/List', arguments: 'dev');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ListRoute(),
+            settings: RouteSettings(
+              arguments: 'dev'
+            )
+          )
+        );
+      }
+
     });
 
     print("변경후: $selected");

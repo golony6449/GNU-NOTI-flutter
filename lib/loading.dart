@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:gnu_noti_flutter/list.dart';
 
 class LoadingRoute extends StatefulWidget {
   @override
@@ -13,7 +14,13 @@ class _LoadingRouteState extends State<LoadingRoute> {
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/List');
+    Navigator.of(context).pushReplacementNamed('/List', arguments: 'mix');
+
+//    Navigator.of(context).pushReplacement(
+//        new MaterialPageRoute(
+//            settings: const RouteSettings(name: '/List'),
+//        )
+//    );
   }
 
   @override
