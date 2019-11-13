@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:gnu_noti_flutter/mode_selector.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: non_constant_identifier_names
@@ -41,19 +42,7 @@ class ListRoute extends StatelessWidget {
           body: Center(
             child: NotificationList(),
           ),
-//          bottomNavigationBar: BottomNavigationBar(
-//            currentIndex: 0,
-//            items: [
-//              BottomNavigationBarItem(
-//                  icon: new Icon(Icons.whatshot),
-//                  title: new Text("HOT NEWS")
-//              ),
-//              BottomNavigationBarItem(
-//                  icon: new Icon(Icons.message),
-//                  title: new Text("기관공지"),
-//              )
-//            ],
-//          ),
+          bottomNavigationBar: ModeSelector()
         )
     );
   }
@@ -77,6 +66,12 @@ class NotificationList extends StatefulWidget{
   @override
   NotificationListState createState() => NotificationListState();
 }
+
+// reference
+// https://medium.com/saugo360/flutter-creating-a-listview-that-loads-one-page-at-a-time-c5c91b6fabd3
+// https://medium.com/@jimmyhott/using-futurebuilder-to-create-a-better-widget-4c7d4f52a329
+// keyword: flutter listtile loading, futurebuilder firestore
+
 
 class NotificationListState extends State<NotificationList>{
   @override
