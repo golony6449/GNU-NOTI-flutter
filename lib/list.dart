@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:gnu_noti_flutter/mode_selector.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: non_constant_identifier_names
@@ -42,22 +41,41 @@ class ListRoute extends StatelessWidget {
           // is not restarted.
             primarySwatch: Colors.blue
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("GNU-NOTI"),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.settings),
-                iconSize: 25,
-                onPressed: () => _settingEvent(context),
-              )
-            ],
+        home: DefaultTabController(
+            length: 3,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text("GNU-NOTI"),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.settings),
+                    iconSize: 25,
+                    onPressed: () => _settingEvent(context),
+                  )
+                ],
 
-          ),
-          body: Center(
-            child: NotificationList(),
-          ),
-          bottomNavigationBar: ModeSelector()
+              ),
+//          body: Center(
+//            child: NotificationList(),
+//          ),
+//          bottomNavigationBar: ModeSelector()
+
+              body: TabBarView(
+                children: <Widget>[
+                  Icon(Icons.public),
+                  Icon(Icons.whatshot),
+                  Icon(Icons.message)
+                ],
+              ),
+              bottomNavigationBar: new TabBar(
+                tabs: [
+                  Tab(text: "전체", icon: Icon(Icons.public)),
+                  Tab(text: "HOT NEWS", icon: Icon(Icons.whatshot)),
+                  Tab(text: "기관공지", icon: Icon(Icons.message)),
+                ],
+                labelColor: Colors.black,
+              ),
+            )
         )
     );
   }
@@ -78,6 +96,7 @@ class ListRoute extends StatelessWidget {
 }
 
 class NotificationList extends StatefulWidget{
+  String temp;
   @override
   NotificationListState createState() => NotificationListState();
 }
