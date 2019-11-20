@@ -68,13 +68,15 @@ class MyApp extends StatelessWidget{
               status = values;
             });
 
-//    return new MaterialApp(
-//      home: LoadingRoute(),
-//      routes: <String, WidgetBuilder>{
-//        '/List': (BuildContext context) => new ListRoute()
-//      },
-//    );
+    return new MaterialApp(
+      home: LoadingRoute(),
+      routes: <String, WidgetBuilder>{
+        '/List': (BuildContext context) => mainApp(context)
+      },
+    );
+  }
 
+  Widget mainApp(BuildContext context){
     return MaterialApp(
         title: 'GNU-NOTI',
         theme: ThemeData(
@@ -113,7 +115,7 @@ class MyApp extends StatelessWidget{
 //                  Icon(Icons.public),
                   NotificationList(ch: "mix",),
                   Icon(Icons.whatshot),
-                  Icon(Icons.message)
+                  NotificationList(ch: 'dev')
                 ],
               ),
               bottomNavigationBar: new TabBar(
