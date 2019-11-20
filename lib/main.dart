@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:gnu_noti_flutter/loading.dart';
 import 'package:gnu_noti_flutter/setting.dart';
@@ -67,11 +68,64 @@ class MyApp extends StatelessWidget{
               status = values;
             });
 
-    return new MaterialApp(
-      home: LoadingRoute(),
-      routes: <String, WidgetBuilder>{
-        '/List': (BuildContext context) => new ListRoute()
-      },
+//    return new MaterialApp(
+//      home: LoadingRoute(),
+//      routes: <String, WidgetBuilder>{
+//        '/List': (BuildContext context) => new ListRoute()
+//      },
+//    );
+
+    return MaterialApp(
+        title: 'GNU-NOTI',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+            primarySwatch: Colors.blue
+        ),
+        home: DefaultTabController(
+            length: 3,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text("GNU-NOTI"),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.settings),
+                    iconSize: 25,
+                    onPressed: () => _settingEvent(context),
+                  )
+                ],
+
+              ),
+//          body: Center(
+//            child: NotificationList(),
+//          ),
+//          bottomNavigationBar: ModeSelector()
+
+              body: TabBarView(
+                children: <Widget>[
+//                  Icon(Icons.public),
+                  NotificationList(ch: "mix",),
+                  Icon(Icons.whatshot),
+                  Icon(Icons.message)
+                ],
+              ),
+              bottomNavigationBar: new TabBar(
+                tabs: [
+                  Tab(text: "전체", icon: Icon(Icons.public)),
+                  Tab(text: "HOT NEWS", icon: Icon(Icons.whatshot)),
+                  Tab(text: "기관공지", icon: Icon(Icons.message)),
+                ],
+                labelColor: Colors.black,
+              ),
+            )
+        )
     );
   }
 
@@ -102,5 +156,19 @@ class MyApp extends StatelessWidget{
     prefs.setBool("HOTNEWS", true);
     prefs.setBool("AGENCY", true);
     prefs.setBool("CS", false);
+  }
+
+  void _settingEvent(BuildContext context){
+    print("Setting Button Pressed");
+    // TODO: 우선 한 컬랙션에 모두 저장 후 추후 구현
+//    Navigator.push(
+//      context,
+//      MaterialPageRoute(builder: (context) => SettingRoute())
+//    );
+    Flushbar(
+      title: "불편을 드려 죄송합니다.",
+      message: "설정기능은 현재 개발중입니다.",
+      duration: Duration(seconds: 3),
+    ).show(context);
   }
 }

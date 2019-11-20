@@ -96,7 +96,10 @@ class ListRoute extends StatelessWidget {
 }
 
 class NotificationList extends StatefulWidget{
-  String temp;
+  String ch;
+
+  NotificationList({Key key, @required this.ch}) : super(key: key);
+
   @override
   NotificationListState createState() => NotificationListState();
 }
@@ -110,6 +113,7 @@ class NotificationList extends StatefulWidget{
 class NotificationListState extends State<NotificationList>{
   @override
   Widget build(BuildContext context) {
+    String channel = widget.ch;
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection(channel).orderBy('id', descending: true).snapshots(),
       builder: (context, snapshot){
