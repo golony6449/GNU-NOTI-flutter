@@ -1,5 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gnu_noti_flutter/fcm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -44,9 +46,6 @@ class SettingRoute extends StatelessWidget{
     value = prefs.getBool("AGENCY") ?? prefs.setBool("AGENCY", true);
     values.add(value);
 
-    value = prefs.getBool("CS") ?? prefs.setBool("CS", false);
-    values.add(value);
-
     return values;
   }
 }
@@ -65,7 +64,7 @@ class SettingListState extends State<SettingList>{
         separatorBuilder: (context, i) => Divider(
           color: Colors.black
         ),
-        itemCount: 4,
+        itemCount: 3,
         padding: EdgeInsets.all(10.0),
         itemBuilder: (context, i) {
           return SettingListTile(
@@ -89,9 +88,6 @@ class SettingListState extends State<SettingList>{
     value = prefs.getBool("AGENCY") ?? prefs.setBool("AGENCY", true);
     values.add(value);
 
-    value = prefs.getBool("CS") ?? prefs.setBool("CS", false);
-    values.add(value);
-
     // TODO: 이유는 모르겠으나, Duration이 적용되지 않음
 //    return await Future.delayed(Duration(seconds: 5), () => values);
     await new Future.delayed(Duration(seconds: 2), () => {print("Delay 완료")});
@@ -103,13 +99,34 @@ class SettingListState extends State<SettingList>{
 
     prefs.setBool("HOTNEWS", status[0]);
     prefs.setBool("AGENCY", status[1]);
-    prefs.setBool("CS", status[2]);
   }
 
   void switchValueChanged(int i, bool value){
+    FirebaseCloudMessaging _fcm = FirebaseCloudMessaging();
+    if (i == 0){
+      if (value == true) {
+        _fcm.subscribe("gnu");
+        print("HOT NEWS 구독");
+      }
+      else {
+        _fcm.unsubscribe("gnu");
+        print("HOT NEWS 구독 해지");
+      }
+    }
+    else if (i == 1) {
+      if (value == true) {
+        _fcm.subscribe("agency");
+        print("기관공지 구독");
+      }
+      else {
+        _fcm.unsubscribe("agency");
+        print("기관공지 구독 해지");
+      }
+    }
+
     status[i] = value;
     print("Switch: Status Changed");
-    print("Menu: $value");
+    print("$i: $value");
     setStatus();
 
     setState(() {});
@@ -125,7 +142,7 @@ class SettingListTile extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    if (i == 3){
+    if (i == 2){
       return ListTile(
         title: Text("텔레그램 채널로 이동"),
         onTap: _telegramLaunch,
@@ -141,7 +158,7 @@ class SettingListTile extends StatelessWidget{
   }
 
   Widget _buildListElementText(int i){
-    List<String> options = ["HOT NEWS", "기관공지", "컴퓨터과학과"];
+    List<String> options = ["HOT NEWS", "기관공지"];
     return Container(
         padding: EdgeInsets.all(5.0),
         child: Text(options[i])
@@ -152,7 +169,6 @@ class SettingListTile extends StatelessWidget{
     List<String> desc = [
       "공식 홈페이지의 HOT NEWS 게시판에서 새로운 공지사항을 가져옵니다.",
       "공식 홈페이지의 기관공지 게시판에서 새로운 공지사항을 가져옵니다.",
-      "자연과학대학 컴퓨터과학과의 새로운 공지사항을 가져옵니다."
     ];
 
     return Text(desc[i]);
