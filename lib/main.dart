@@ -127,8 +127,8 @@ class MyApp extends StatelessWidget{
                 children: <Widget>[
 //                  Icon(Icons.public),
                   NotificationList(ch: "mix",),
-                  Icon(Icons.whatshot),
-                  NotificationList(ch: 'dev')
+                  NotificationList(ch: "gnu"),
+                  NotificationList(ch: "agency")
                 ],
               ),
               bottomNavigationBar: new TabBar(
