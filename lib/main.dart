@@ -10,13 +10,18 @@ import 'list.dart';
 void main() => runApp(MyApp());
 
 // ignore: non_constant_identifier_names
-String DEBUG_CHANNEL = 'mix';
+bool DEBUG = true;
 
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     FirebaseCloudMessaging _fcm = FirebaseCloudMessaging();
-    _fcm.dev_configure();
+    if (DEBUG == true) {
+      print("디버깅 모드");
+//      _fcm.dev_configure();
+    }
+
+    this.getStatus();
 
 
     return new MaterialApp(
@@ -98,6 +103,15 @@ class MyApp extends StatelessWidget{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("HOTNEWS", true);
     prefs.setBool("AGENCY", true);
+
+    //  FCM 추가 구성
+    FirebaseCloudMessaging _fcm = FirebaseCloudMessaging();
+    _fcm.subscribe("gnu");
+    _fcm.subscribe("agency");
+    if (DEBUG == true){
+      _fcm.dev_configure();
+    }
+
   }
 
   void _settingEvent(BuildContext context){
