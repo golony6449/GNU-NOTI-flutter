@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gnu_noti_flutter/list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoadingRoute extends StatefulWidget {
   @override
@@ -13,14 +14,29 @@ class _LoadingRouteState extends State<LoadingRoute> {
     return new Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/List', arguments: 'mix');
+  void navigationPage() async {
+    var param = await isFirstBoot();
+    print("param: $param");
+    if (param) {
+      Navigator.of(context).pushReplacementNamed('/Intro');
+    } else {
+      Navigator.of(context).pushReplacementNamed("/List", arguments: 'mix');
+    }
   }
 
   @override
   void initState() {
     super.initState();
     startTime();
+  }
+
+  Future<bool> isFirstBoot() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    bool isFirstBoot = await prefs.getBool("FIRSTRUN");
+    print("isFirstBoot: $isFirstBoot");
+
+    return isFirstBoot;
   }
 
   @override

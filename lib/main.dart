@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:gnu_noti_flutter/fcm.dart';
+import 'package:gnu_noti_flutter/intro_screen.dart';
 import 'package:gnu_noti_flutter/loading.dart';
 import 'package:gnu_noti_flutter/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget{
     return new MaterialApp(
       home: LoadingRoute(),
       routes: <String, WidgetBuilder>{
-        '/List': (BuildContext context) => mainApp(context)
+        '/List': (BuildContext context) => mainApp(context),
+        '/Intro': (BuildContext context) => IntroScreen()
       },
     );
   }
@@ -52,14 +54,9 @@ class MyApp extends StatelessWidget{
                 ],
 
               ),
-//          body: Center(
-//            child: NotificationList(),
-//          ),
-//          bottomNavigationBar: ModeSelector()
 
               body: TabBarView(
                 children: <Widget>[
-//                  Icon(Icons.public),
                   NotificationList(ch: "mix",),
                   NotificationList(ch: "gnu"),
                   NotificationList(ch: "agency")
@@ -103,6 +100,7 @@ class MyApp extends StatelessWidget{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("HOTNEWS", true);
     prefs.setBool("AGENCY", true);
+    prefs.setBool("FIRSTRUN", true);
 
     //  FCM 추가 구성
     FirebaseCloudMessaging _fcm = FirebaseCloudMessaging();
@@ -111,6 +109,13 @@ class MyApp extends StatelessWidget{
     if (DEBUG == true){
       _fcm.dev_configure();
     }
+
+    // 팝업
+//    // 테스트용 코드
+//      showDialog(
+//        context: context,
+//        builder: (BuildContext context) => _popupNotification(context)
+//      );
 
   }
 
@@ -121,6 +126,33 @@ class MyApp extends StatelessWidget{
       context,
       MaterialPageRoute(builder: (context) => SettingRoute())
     );
+  }
 
+  Widget _popupNotification(BuildContext context) {
+    return AlertDialog(
+        title: Text("환영합니다."),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+              Text("공지사항 알리미는 새로운 공지사항이 등록되었을 때 Push 알림을 수신할 수 있습니다."),
+              Text("Push 알림을 수신할 수 없을 경우, 설정에서 수신해제후 다시 수신으로 등록해주세요."),
+      ],
+          ),
+
+        actions: <Widget>[
+          FlatButton(
+            child: Text("닫기"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+
+          FlatButton(
+            child: Text("오늘 하루 열지 않기"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ]);
   }
 }
