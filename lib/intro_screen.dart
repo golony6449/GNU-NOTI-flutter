@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroScreen extends StatefulWidget {
   @override
@@ -41,8 +42,21 @@ class IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  void onDonePress() {
-    // Do what you want
+  void onDonePress() async {
+    setFirstBootPrefs(false);
+    Navigator.of(context).pushReplacementNamed("/List", arguments: "mix");
+  }
+
+  void onSkipPress() async {
+    setFirstBootPrefs(false);
+    Navigator.of(context).pushReplacementNamed("/List", arguments: "mix");
+  }
+
+  void setFirstBootPrefs(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    print("set FIRSTRUN param: $value");
+    await prefs.setBool("FIRSTRUN", value);
   }
 
   @override
@@ -50,6 +64,7 @@ class IntroScreenState extends State<IntroScreen> {
     return new IntroSlider(
       slides: this.slides,
       onDonePress: this.onDonePress,
+      onSkipPress: this.onSkipPress,
     );
   }
 }

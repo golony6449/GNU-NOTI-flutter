@@ -33,7 +33,7 @@ class _LoadingRouteState extends State<LoadingRoute> {
   Future<bool> isFirstBoot() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    bool isFirstBoot = await prefs.getBool("FIRSTRUN");
+    bool isFirstBoot = prefs.getBool("FIRSTRUN");
     print("isFirstBoot: $isFirstBoot");
 
     return isFirstBoot;
