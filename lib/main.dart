@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gnu_noti_flutter/fcm.dart';
 import 'package:gnu_noti_flutter/intro_screen.dart';
 import 'package:gnu_noti_flutter/loading.dart';
+import 'package:gnu_noti_flutter/main_drawer.dart';
 import 'package:gnu_noti_flutter/setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,14 +44,15 @@ class MyApp extends StatelessWidget{
         home: DefaultTabController(
             length: 3,
             child: Scaffold(
+              drawer: MainDrawer(),
               appBar: AppBar(
                 title: Text("GNU-NOTI"),
                 actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.settings),
-                    iconSize: 25,
-                    onPressed: () => _settingEvent(context),
-                  )
+//                  IconButton(
+//                    icon: Icon(Icons.settings),
+//                    iconSize: 25,
+//                    onPressed: () => _settingEvent(context),
+//                  )
                 ],
 
               ),
