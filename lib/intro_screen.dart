@@ -15,30 +15,58 @@ class IntroScreenState extends State<IntroScreen> {
   void initState() {
     super.initState();
 
+    // TODO: 다국어 지원
+    List<String> descriptions = [
+      '''
+이 앱은 비공식 앱 입니다. \n\n
+반드시 공지사항 원문의 링크를 확인해주세요.
+      ''',
+      '''
+공지사항에 대해 Push 서비스를 제공합니다.\n\n
+    ''',
+      '''
+설정에서 수신할 항목을 선택할 수 있습니다.
+      ''',
+      '''
+동작하지 않을 때는 설정에서 항목을 재등록 해보세요.
+      '''
+    ];
+
     slides.add(
       new Slide(
-        title: "ERASER",
-        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
-        pathImage: "images/photo_eraser.png",
-        backgroundColor: Color(0xfff5a623),
+        title: "환영합니다.",
+        description: descriptions[0],
+        pathImage: "assets/image/logo.png",
+        widthImage: 200.0,
+        heightImage: 200.0,
+        backgroundColor: Color(0xff2857a2),
       ),
     );
+    
+    // TODO: GIF 제작
     slides.add(
       new Slide(
-        title: "PENCIL",
-        description: "Ye indulgence unreserved connection alteration appearance",
-        pathImage: "images/photo_pencil.png",
-        backgroundColor: Color(0xff203152),
+        title: "공지사항을 편리하게!",
+        description: descriptions[1],
+        pathImage: "assets/image/test.gif",
+        backgroundColor: Color(0xff6083d4),
       ),
     );
+
     slides.add(
       new Slide(
-        title: "RULER",
-        description:
-        "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        pathImage: "images/photo_ruler.png",
-        backgroundColor: Color(0xff9932CC),
-      ),
+        title: "수신할 항목 선택하기.",
+        description: descriptions[2],
+        backgroundColor: Color(0xff00acad),
+      )
+    );
+
+    slides.add(
+      new Slide(
+        title: "수신할 항목 선택하기.",
+        description: descriptions[3],
+        backgroundColor: Color(0xff56c8d8),
+      )
     );
   }
 

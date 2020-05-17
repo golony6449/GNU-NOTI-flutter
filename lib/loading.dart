@@ -17,7 +17,9 @@ class _LoadingRouteState extends State<LoadingRoute> {
   void navigationPage() async {
     var param = await isFirstBoot();
     print("param: $param");
-    if (param) {
+
+    // TODO: 테스트 코드
+    if (true) {
       Navigator.of(context).pushReplacementNamed('/Intro');
     } else {
       Navigator.of(context).pushReplacementNamed("/List", arguments: 'mix');
